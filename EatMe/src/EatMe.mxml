@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:module="*"
+			   xmlns:skin="skin.*"
+			   width="442" height="632" minWidth="955" minHeight="650" fontFamily="微软雅黑"
+			   initialize="onInit()" creationComplete="application1_creationCompleteHandler(event)"
+			   addedToStage="addedToStageHandler(event)">
+	
+	<fx:Script source="eatMe.as" />	
+	<fx:Script source="net/eatMeSocket.as" />
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->		
+	</fx:Declarations>
+	
+	<s:Button id="getBtn" x="217" y="48" label="获取菜单" click="getBtn_clickHandler(event)"/>
+	<s:Label id="nameSaticText" x="8" y="11" height="22" text="请输入您的名字" verticalAlign="middle"/>
+	<s:TextInput id="nameText" x="113" y="11" width="79" height="22"/>
+	<s:Button id="nameSureBtn" x="216" y="11" label="确认" click="nameSureBtn_clickHandler(event)"/>
+	<s:Button id="modifyBtn" x="216" y="11" label="修改" visible="false" click="modifyBtn_clickHandler(event)"/>
+	<s:Label id="urlTestText" x="10" y="400" width="450" height="20" color="#FB0202"
+			 text="特别鸣谢❤LOLO❤君为本工具作出的不可逾越的卓越贡献！撒花！❀❀❀" verticalAlign="middle"/>
+	<s:Label id="qxText" x="10" y="430" height="20" width="128" text="没有记账权限" />
+<!--	<s:DataGrid id="foodList" x="300" y="20" requestedRowCount="5" width="240" height="360" skinClass="gridView" dataProvider="{menus}"
+				doubleClick="foodList_doubleClickHandler(event)">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="name" headerText="菜名" width="160"></s:GridColumn>
+				<s:GridColumn dataField="price" headerText="价格" ></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+		<s:typicalItem>
+			<fx:Object dataField1="示例数据" dataField2="ddd" ></fx:Object>
+		</s:typicalItem>
+	</s:DataGrid>-->
+	<s:List id="eatList" x="10" y="110" width="278" height="271" dataProvider="{eatArr}" labelField="name" doubleClick="eatList_doubleClickHandler(event)">
+		<s:itemRenderer> 
+			<fx:Component> 
+				<s:ItemRenderer height="21" doubleClickEnabled="true"> 
+					<fx:Script> 
+						<![CDATA[ 
+							import mx.controls.Text; 
+							override public function set data(value:Object):void { 
+								if(value){
+									foodName.text = String(value.name); 
+									price.text = String(value.price); 
+									own.text = String(value.owner);
+								}
+							} 
+						]]> 
+					</fx:Script> 
+					<s:Label id="foodName" x="5"  y="5"/> 
+					<s:Label id="price" x="190" y="7"/> 
+					<s:Label id="own" x="235" y="5"/> 
+				</s:ItemRenderer> 
+			</fx:Component> 
+		</s:itemRenderer> 
+	</s:List>
+	<s:Label x="24" y="562" text="总计："/>
+	<s:Label id="totalMoneyText" x="74" y="562" width="79" height="16"/>
+	<s:Label id="leftMoneyText" x="74" y="590" width="79" height="16"/>
+	<s:Label x="24" y="589" text="剩余："/>
+	<s:Label x="10" y="46" width="66" height="25" text="连接地址" verticalAlign="middle"/>
+	<s:Label id="ipText" x="84" y="47" width="108" height="24"/>
+	<s:Button id="sortBtn" x="246" y="84" width="41" label="▲" click="sortBtn_clickHandler(event)"/>
+	<module:BillPanel id="billPanel" x="74" y="130" height="397">		
+	</module:BillPanel>
+
+</s:Application>

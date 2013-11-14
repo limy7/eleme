@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="600" height="400" fontFamily="微软雅黑" fontSize="14"
+					   showStatusBar="false"
+					   creationComplete="windowedapplication1_creationCompleteHandler(event)"
+					   >
+
+	 
+	<fx:Script source="main.as" />
+	<fx:Script source="menu.as" />
+	<fx:Script source="makeDiary.as"/>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:TextInput id="portText" x="63" y="59" width="100" text="1208"/>
+	<s:TextInput id="hostText" x="63" y="24" width="100" text="0.0.0.0"/>
+	<s:Button id="stateBtn" x="172" y="59" height="25" label="开启" click="stateBtn_clickHandler(event)"/>
+	<s:TextArea id="logText" x="12" y="105" width="192" height="285" editable="false"/>
+	<s:Label x="18" y="30" text="host："/>
+	<s:Label x="18" y="65" text="port："/>
+	<s:List id="clientList" x="482" y="105" width="108" height="285"></s:List>
+	<s:List id="eatList" x="213" y="105" width="259" height="285" dataProvider="{eatArr}">
+		<s:itemRenderer> 
+			<fx:Component> 
+				<s:ItemRenderer height="21"> 
+					<fx:Script> 
+						<![CDATA[ 
+							import mx.controls.Text; 
+							override public function set data(value:Object):void { 
+								if(value){
+									foodName.text = String(value.name); 
+									price.text = String(value.price); 
+									own.text = String(value.owner);
+								}else{
+									foodName.text = "";
+									price.text = "";
+									own.text = "";
+								}
+							} 
+						]]> 
+					</fx:Script> 
+					<s:Label id="foodName" x="5"  y="5"/> 
+					<s:Label id="price" x="190" y="7"/> 
+					<s:Label id="own" x="235" y="5"/> 
+				</s:ItemRenderer> 
+			</fx:Component> 
+		</s:itemRenderer> 
+	</s:List>
+	<s:TextInput id="urlText" x="248" y="23" width="153" text=""/>
+	<s:Button id="sureBtn0" x="409" y="21" height="25" label="确认" click="sureBtn_clickHandler(event)"/>
+	<s:Button id="ipBtn" x="409" y="59" height="25" label="确认" click="ipBtn_clickHandler(event)"/>
+	<s:Button id="submit" x="502" y="22" width="88" height="25" label="提交订单"
+			  click="submit_clickHandler(event)"/>
+	<s:Label x="247" y="62" width="49" height="20" text="权限IP" verticalAlign="middle"/>
+	<s:TextInput id="qxIPText" x="294" y="59" width="106" />
+	<s:Label x="488" y="65" text="总计：" verticalAlign="middle"/>
+	<s:Label x="174" y="28" width="72" text="点餐地址：" verticalAlign="middle"/>
+	<s:Label id="totalText" x="528" y="64" width="62" height="17" verticalAlign="middle"/>
+</s:WindowedApplication>
