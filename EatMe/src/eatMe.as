@@ -15,6 +15,8 @@ import spark.collections.Sort;
 import spark.collections.SortField;
 import spark.components.supportClasses.ItemRenderer;
 
+public var isDebug:Boolean = true;
+
 /**今日菜单*/
 [Bindable]
 public var menus:ArrayCollection = new ArrayCollection();
@@ -46,15 +48,19 @@ protected function application1_creationCompleteHandler(event:FlexEvent):void
 {
 	Common.eatMe = this;
 	
-	if(ExternalInterface.available) {
-		var ipStr:String = ExternalInterface.call("function(){return window.location.href;}");
-		IP = ipStr.split("http://")[1].split("/eleme.html")[0];		
-		ipText.text = IP;
-
-		ExternalInterface.addCallback("addToCart", addToCart);
-	}
-	else {
-		Alert.show("fuck!");
+	if(isDebug){
+		IP = "127.0.0.1";
+	}else{
+		if(ExternalInterface.available) {
+			var ipStr:String = ExternalInterface.call("function(){return window.location.href;}");
+			IP = ipStr.split("http://")[1].split("/eleme.html")[0];		
+			ipText.text = IP;
+	
+			ExternalInterface.addCallback("addToCart", addToCart);
+		}
+		else {
+			Alert.show("fuck!");
+		}
 	}
 	
 	this.addElement(billPanel);
@@ -104,27 +110,12 @@ private function getMenuCallBack(success:Boolean, data:Object):void
 			menus.addItem(data.menus[i]);
 		}
 		
-		//待会加回来
-		initHtml(data.url);
+		if(!isDebug) initHtml(data.url);
+		
 	}
 }
 
-///**双击右边菜单点菜*/
-//protected function foodList_doubleClickHandler(event:MouseEvent):void
-//{
-//	if(guestName == null || guestName == "" )
-//	{
-//		Alert.show("请输入您的姓名");
-//		return;
-//	}
-//	
-//	var item:Object = foodList.selectedItem;
-//	item.owner = guestName;
-//	item.isDone = false;
-//	item.total = int(totalMoneyText.text);
-//	eatArr.addItem(item);
-//	send(ServicesList.SUBMIT,item);
-//}
+
 
 
 /**确认名字*/
@@ -161,6 +152,7 @@ protected function eatList_doubleClickHandler(event:MouseEvent):void
 	if(listItem.owner == guestName)
 	{
 		eatArr.removeItemAt(eatList.selectedIndex);
+		
 		send(ServicesList.REMOVE_ITEM, listItem);
 	}
 }

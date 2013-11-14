@@ -17,8 +17,5 @@ package net
 		/**记账详情发送给服务器*/
 		public static const SEND_TO_FWQ:String = "sendToFWQ";
 		
-		public function ServicesList()
-		{
-		}
 	}
 }
